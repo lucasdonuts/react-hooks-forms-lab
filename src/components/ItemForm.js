@@ -1,9 +1,11 @@
-import React from "react";
+import { useState, React }  from "react";
 import { v4 as uuid } from "uuid";
 
-// items and setItems are already established as state in App
-
-function ItemForm({ onItemFormSubmit, setFormData, formData }) {
+function ItemForm({ onItemFormSubmit }) {
+  const [formData, setFormData] = useState({
+    name: '',
+    category: 'Produce'
+  });
 
   const handleChange = (e) => {
     setFormData({
@@ -13,9 +15,20 @@ function ItemForm({ onItemFormSubmit, setFormData, formData }) {
     })
   }
 
-  console.log(formData)
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const newItem = {
+      id: formData.id,
+      name: formData.name,
+      category: formData.category
+    }
+
+    onItemFormSubmit(newItem);
+  }
+
   return (
-    <form className="NewItem" onSubmit={ onItemFormSubmit }>
+    <form className="NewItem" onSubmit={ handleSubmit }>
       <label>
         Name:
         <input type="text" name="name" onChange={ handleChange } />
